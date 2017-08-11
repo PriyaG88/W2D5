@@ -100,7 +100,14 @@ class ResizingIntSet
   end
 
   def resize!
+    temp_array = Array.new(num_buckets * 2) { Array.new }
 
+    @store.each do |bucket|
+      bucket.each do |num|
+        temp_array[num % temp_array.length] << num
+      end
+    end
 
+    @store = temp_array
   end
 end
