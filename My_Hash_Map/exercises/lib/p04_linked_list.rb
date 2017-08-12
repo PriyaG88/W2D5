@@ -1,4 +1,6 @@
 class Node
+  include Enumerable
+
   attr_accessor :key, :val, :next, :prev
 
   def initialize(key = nil, val = nil)
@@ -18,8 +20,13 @@ class Node
   end
 end
 
-class LinkedList
+class LinkedList < Node
+
   def initialize
+    @first = Node.new
+    @last = Node.new
+    @first.next = @last
+
   end
 
   def [](i)
@@ -28,21 +35,38 @@ class LinkedList
   end
 
   def first
+    @first
   end
 
   def last
+    @last
   end
 
   def empty?
+    return true if @first.val.nil?
+
+    
+
   end
 
   def get(key)
+
+    current_node = @first
+    until current_node.next.nil?
+      current_node.key
+      return current_node.val if current_node.key == key
+      current_node = current_node.next
+    end
+    nil
   end
 
   def include?(key)
   end
 
   def append(key, val)
+    temp = Node.new(key, val)
+    @first.prev = temp
+    @first = temp
   end
 
   def update(key, val)
